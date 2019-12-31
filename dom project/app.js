@@ -118,11 +118,11 @@ function setActivePlayer(player){
 }
 
 
-newGameButton = document.getElementsByClassName("btn-new")[0];
+var newGameButton = document.getElementsByClassName("btn-new")[0];
 newGameButton.addEventListener("click", newGame);
 
-rollButton = document.getElementsByClassName("btn-roll")[0];
+var rollButton = document.getElementsByClassName("btn-roll")[0];
 rollButton.addEventListener("click", rollDice);
 
-holdButton = document.getElementsByClassName("btn-hold")[0];
+var holdButton = document.getElementsByClassName("btn-hold")[0];
 holdButton.addEventListener("click", nextPlayer);
