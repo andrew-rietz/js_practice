@@ -132,14 +132,15 @@ function warnUser(){
 }
 
 function updateWinningScore(){
+    if(winningValueInput.value !== winningValue){
     winningValue = winningValueInput.value
     newGame()
-    winningValueInput.value = winningValue
+    }
 }
 
 
 winningValueInput.addEventListener("click", warnUser);
-winningValueInput.addEventListener("submit", updateWinningScore);
+winningValueInput.addEventListener("oninput", updateWinningScore);
 
 var newGameButton = document.getElementsByClassName("btn-new")[0];
 newGameButton.addEventListener("click", newGame);
