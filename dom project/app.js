@@ -98,6 +98,7 @@ function isWinner(player){
 function setWinner(player){
     document.querySelector(".player-" + player + "-panel").classList.remove("active")
     document.querySelector(".player-" + player + "-panel").classList.add("winner")
+    document.getElementById("name-" + player).textContent = "Winner!"
     diceElement.style.display = "none"
     document.getElementById("game-over").style.display = "block"
 }
