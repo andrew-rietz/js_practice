@@ -18,9 +18,9 @@ Change the game to follow these rules:
 3. Add another dice to the game, so that there are two dices now. The player looses his current score when one of them is a 1. (Hint: you will need CSS to position the second dice, so take a look at the CSS code for the first one.)
 */
 
-var diceValue, roundScore, activePlayer, isOver, lastRoll, winningValue, inputWarning;
+var roundScore, activePlayer, isOver, lastRoll, winningValue, inputWarning;
 var playerScores = {};
-var diceElement = document.getElementsByClassName("dice")[0];
+var diceElements = document.querySelectorAll('[class^="dice-"]');
 var winningValueInput = document.getElementById("winning-score");
 
 // Set up the game board
@@ -38,7 +38,7 @@ function newGame(){
     }
     activePlayer = Math.round(Math.random());
     setActivePlayer(activePlayer);
-    diceElement.style.display = "none"
+    setDiceDisplay("none");
     document.getElementById("game-over").style.display = "none"
     isOver = false;
     inputWarning = false;
@@ -48,24 +48,29 @@ function newGame(){
 function rollDice(){
     if(isOver){return}
 
+    for(var i = 0; i < diceElements.length; i++){
     // Roll a six-sided die
     roll = Math.floor(Math.random() * 6) + 1
+        console.log(roll)
 
     // Update the dice display
-    diceElement = document.getElementsByClassName("dice")[0]
-    diceElement.src="dice-" + roll + ".png"
-    diceElement.style.display = "block"
+        diceElements[i] = roll
+        diceElements[i].src="dice-" + roll + ".png"
+        diceElements[i].style.display = "block"
 
     // Check the roll is valid
     if(roll === 1){
         roundScore = 0;
         nextPlayer();
+            return
     } else if (roll === 6 & lastRoll === 6) {
         roundScore += roll;
         nextPlayer();
+            return
     } else {
         roundScore += roll;
         lastRoll = roll;
+    }
     }
 
     // Update the current score display
@@ -83,7 +88,7 @@ function nextPlayer(){
         setWinner(activePlayer);
     } else {
         // Reset dice and round Scores for the next round
-        diceElement.style.display = "none";
+        setDiceDisplay("none")
         roundScore = 0;
         setRoundScore(activePlayer, roundScore)
 
@@ -103,7 +108,7 @@ function setWinner(player){
     document.querySelector(".player-" + player + "-panel").classList.remove("active")
     document.querySelector(".player-" + player + "-panel").classList.add("winner")
     document.getElementById("name-" + player).textContent = "Winner!"
-    diceElement.style.display = "none"
+    setDiceDisplay("none")
     document.getElementById("game-over").style.display = "block"
 }
 
@@ -119,6 +124,12 @@ function setTotalScore(player, score){
 function setActivePlayer(player){
     document.querySelector(".player-" + player + "-panel").classList.add("active")
     document.querySelector(".player-" + Number(!player) + "-panel").classList.remove("active")
+}
+
+function setDiceDisplay(dispType){
+    for(var i = 0; i < diceElements.length; i++){
+        diceElements[i].style.display = dispType
+    }
 }
 
 
