@@ -72,7 +72,7 @@ input::-webkit-inner-spin-button {
     width: 50%;
     float: left;
     height: 600px;
-    padding: 120px;
+    padding: 100px;
 }
 
 
@@ -133,7 +133,7 @@ input::-webkit-inner-spin-button {
     font-size: 30px;
 }
 
-button {
+.centered-button {
     position: absolute;
     width: 200px;
     left: 50%;
@@ -167,7 +167,17 @@ i {
     transition: margin 0.3s;
 }
 
-.btn-new { top: 80px;}
+.btn-new { 
+    /* top: 80px; */
+    background: none;
+    border: none;
+    font-family: Lato;
+    font-size: 20px;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-weight: 300;
+    padding-left: 25px;
+}
 .btn-roll { top: 403px;}
 .btn-hold { top: 467px;}
 
