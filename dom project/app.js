@@ -9,7 +9,16 @@ GAME RULES:
 
 */
 
-var diceValue, roundScore, activePlayer, isOver;
+/*
+YOUR 3 CHALLENGES
+Change the game to follow these rules:
+
+1. A player looses his ENTIRE score when he rolls two 6 in a row. After that, it's the next player's turn. (Hint: Always save the previous dice roll in a separate variable)
+2. Add an input field to the HTML where players can set the winning score, so that they can change the predefined score of 100. (Hint: you can read that value with the .value property in JavaScript. This is a good oportunity to use google to figure this out :)
+3. Add another dice to the game, so that there are two dices now. The player looses his current score when one of them is a 1. (Hint: you will need CSS to position the second dice, so take a look at the CSS code for the first one.)
+*/
+
+var diceValue, roundScore, activePlayer, isOver, lastRoll;
 var playerScores = {};
 var diceElement = document.getElementsByClassName("dice")[0];
 
@@ -18,6 +27,7 @@ newGame();
 
 function newGame(){
     roundScore = 0;
+    lastRoll = 0;
     for(var player in [0, 1]){
         playerScores[player] = 0;
         setTotalScore(player, 0);
@@ -46,8 +56,12 @@ function rollDice(){
     if(roll === 1){
         roundScore = 0;
         nextPlayer();
+    } else if (roll === 6 & lastRoll === 6) {
+        roundScore += roll;
+        nextPlayer();
     } else {
         roundScore += roll;
+        lastRoll = roll;
     }
 
     // Update the current score display
@@ -73,6 +87,7 @@ function nextPlayer(){
         activePlayer = Number(!activePlayer);
         setActivePlayer(activePlayer);
     }
+    lastRoll = 0;
 }
 
 function isWinner(player){
