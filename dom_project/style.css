@@ -203,12 +203,12 @@ i {
 .winner .player-name { font-weight: 300; color: #EB4D4D; }
 
 /**********************************************
-*** GAME OVER
+*** HUD Status Message
 **********************************************/
 
-.game-over {
+.status-msg {
     display: none;
-    font-size: 55px;
+    font-size: 24px;
     text-align: center;
     text-transform: uppercase;
     letter-spacing: 2px;

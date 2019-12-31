@@ -39,7 +39,7 @@ function newGame(){
     activePlayer = Math.round(Math.random());
     setActivePlayer(activePlayer);
     setDiceDisplay("none");
-    document.getElementById("game-over").style.display = "none"
+    document.getElementById("status-msg").style.display = "none"
     isOver = false;
     inputWarning = false;
     winningValue = winningValueInput.value
@@ -51,10 +51,9 @@ function rollDice(){
     for(var i = 0; i < diceElements.length; i++){
         // Roll a six-sided die
         roll = Math.floor(Math.random() * 6) + 1
-        console.log(roll)
 
         // Update the dice display
-        diceElements[i] = roll
+        document.getElementById("status-msg").style.display = "none"
         diceElements[i].src="dice-" + roll + ".png"
         diceElements[i].style.display = "block"
 
@@ -62,10 +61,12 @@ function rollDice(){
         if(roll === 1){
             roundScore = 0;
             nextPlayer();
+            setTurnOverMsg(activePlayer, "You rolled a 1.")
             return
         } else if (roll === 6 & lastRoll === 6) {
             roundScore += roll;
             nextPlayer();
+            setTurnOverMsg(activePlayer, "You rolled two sixes in a row!")
             return
         } else {
             roundScore += roll;
@@ -109,7 +110,14 @@ function setWinner(player){
     document.querySelector(".player-" + player + "-panel").classList.add("winner")
     document.getElementById("name-" + player).textContent = "Winner!"
     setDiceDisplay("none")
-    document.getElementById("game-over").style.display = "block"
+    document.getElementById("status-msg").textContent = "GAME OVER"
+    document.getElementById("status-msg").style.display = "block"
+}
+
+function setTurnOverMsg(player, msg){
+    setDiceDisplay("none")
+    document.getElementById("status-msg").innerHTML = msg + "<br>Player " + (Number(player) + 1) + ", it's your turn!"
+    document.getElementById("status-msg").style.display = "block"
 }
 
 function setRoundScore(player, score){
@@ -134,11 +142,9 @@ function setDiceDisplay(dispType){
 
 
 function warnUser(){
-    if(!inputWarning){
-        if(!isOver){
-            alert("Modifying the Winning Score will restart the game!");
-            inputWarning = true;
-        }        
+    if(!inputWarning & !isOver){
+        alert("Modifying the Winning Score will restart the game!");
+        inputWarning = true;
     }
 }
 
