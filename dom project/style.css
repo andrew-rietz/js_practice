@@ -37,12 +37,42 @@ body {
     overflow: hidden;
 }
 
+.user-globals {
+    width: 100%;
+    padding: 10px;
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    background-color: #ececec;
+    z-index: 1;
+    font-size: 20px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    /* font-weight: 100; */
+}
+
+input{
+    width: 10%;
+    padding: 2px;
+    font-size: 20px;
+    text-align: center;
+    font-weight: 200;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .player-0-panel,
 .player-1-panel {
     width: 50%;
     float: left;
     height: 600px;
-    padding: 100px;
+    padding: 120px;
 }
 
 
@@ -137,7 +167,7 @@ i {
     transition: margin 0.3s;
 }
 
-.btn-new { top: 45px;}
+.btn-new { top: 80px;}
 .btn-roll { top: 403px;}
 .btn-hold { top: 467px;}
 
