@@ -49,28 +49,28 @@ function rollDice(){
     if(isOver){return}
 
     for(var i = 0; i < diceElements.length; i++){
-    // Roll a six-sided die
-    roll = Math.floor(Math.random() * 6) + 1
+        // Roll a six-sided die
+        roll = Math.floor(Math.random() * 6) + 1
         console.log(roll)
 
-    // Update the dice display
+        // Update the dice display
         diceElements[i] = roll
         diceElements[i].src="dice-" + roll + ".png"
         diceElements[i].style.display = "block"
 
-    // Check the roll is valid
-    if(roll === 1){
-        roundScore = 0;
-        nextPlayer();
+        // Check the roll is valid
+        if(roll === 1){
+            roundScore = 0;
+            nextPlayer();
             return
-    } else if (roll === 6 & lastRoll === 6) {
-        roundScore += roll;
-        nextPlayer();
+        } else if (roll === 6 & lastRoll === 6) {
+            roundScore += roll;
+            nextPlayer();
             return
-    } else {
-        roundScore += roll;
-        lastRoll = roll;
-    }
+        } else {
+            roundScore += roll;
+            lastRoll = roll;
+        }
     }
 
     // Update the current score display
@@ -144,8 +144,8 @@ function warnUser(){
 
 function updateWinningScore(){
     if(winningValueInput.value !== winningValue){
-    winningValue = winningValueInput.value
-    newGame()
+        winningValue = winningValueInput.value
+        newGame()
     }
 }
 
