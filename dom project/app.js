@@ -18,9 +18,10 @@ Change the game to follow these rules:
 3. Add another dice to the game, so that there are two dices now. The player looses his current score when one of them is a 1. (Hint: you will need CSS to position the second dice, so take a look at the CSS code for the first one.)
 */
 
-var diceValue, roundScore, activePlayer, isOver, lastRoll;
+var diceValue, roundScore, activePlayer, isOver, lastRoll, winningValue, inputWarning;
 var playerScores = {};
 var diceElement = document.getElementsByClassName("dice")[0];
+var winningValueInput = document.getElementById("winning-score");
 
 // Set up the game board
 newGame();
@@ -40,6 +41,8 @@ function newGame(){
     diceElement.style.display = "none"
     document.getElementById("game-over").style.display = "none"
     isOver = false;
+    inputWarning = false;
+    winningValue = winningValueInput.value
 }
 
 function rollDice(){
@@ -92,7 +95,7 @@ function nextPlayer(){
 }
 
 function isWinner(player){
-    isOver = (playerScores[player] >= 10);
+    isOver = (playerScores[player] >= winningValue);
     return isOver;
 }
 
@@ -118,6 +121,25 @@ function setActivePlayer(player){
     document.querySelector(".player-" + Number(!player) + "-panel").classList.remove("active")
 }
 
+
+function warnUser(){
+    if(!inputWarning){
+        if(!isOver){
+            alert("Modifying the Winning Score will restart the game!");
+            inputWarning = true;
+        }        
+    }
+}
+
+function updateWinningScore(){
+    winningValue = winningValueInput.value
+    newGame()
+    winningValueInput.value = winningValue
+}
+
+
+winningValueInput.addEventListener("click", warnUser);
+winningValueInput.addEventListener("submit", updateWinningScore);
 
 var newGameButton = document.getElementsByClassName("btn-new")[0];
 newGameButton.addEventListener("click", newGame);
