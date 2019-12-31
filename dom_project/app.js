@@ -22,6 +22,7 @@ var roundScore, activePlayer, isOver, lastRoll, winningValue, inputWarning;
 var playerScores = {};
 var diceElements = document.querySelectorAll('[class^="dice-"]');
 var winningValueInput = document.getElementById("winning-score");
+var gameStatusMsg = document.getElementById("status-msg");
 
 // Set up the game board
 newGame();
@@ -39,7 +40,7 @@ function newGame(){
     activePlayer = Math.round(Math.random());
     setActivePlayer(activePlayer);
     setDiceDisplay("none");
-    document.getElementById("status-msg").style.display = "none"
+    gameStatusMsg.style.display = "none"
     isOver = false;
     inputWarning = false;
     winningValue = winningValueInput.value
@@ -53,7 +54,7 @@ function rollDice(){
         roll = Math.floor(Math.random() * 6) + 1
 
         // Update the dice display
-        document.getElementById("status-msg").style.display = "none"
+        gameStatusMsg.style.display = "none"
         diceElements[i].src="dice-" + roll + ".png"
         diceElements[i].style.display = "block"
 
@@ -110,14 +111,14 @@ function setWinner(player){
     document.querySelector(".player-" + player + "-panel").classList.add("winner")
     document.getElementById("name-" + player).textContent = "Winner!"
     setDiceDisplay("none")
-    document.getElementById("status-msg").textContent = "GAME OVER"
-    document.getElementById("status-msg").style.display = "block"
+    gameStatusMsg.textContent = "GAME OVER"
+    gameStatusMsg.style.display = "block"
 }
 
 function setTurnOverMsg(player, msg){
     setDiceDisplay("none")
-    document.getElementById("status-msg").innerHTML = msg + "<br>Player " + (Number(player) + 1) + ", it's your turn!"
-    document.getElementById("status-msg").style.display = "block"
+    gameStatusMsg.innerHTML = msg + "<br>Player " + (Number(player) + 1) + ", it's your turn!"
+    gameStatusMsg.style.display = "block"
 }
 
 function setRoundScore(player, score){
