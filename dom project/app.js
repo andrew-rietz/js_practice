@@ -33,6 +33,7 @@ function newGame(){
         setTotalScore(player, 0);
         setRoundScore(player, 0);
         document.getElementById("name-" + player).textContent = "Player " + (Number(player) + 1)
+        document.querySelector(".player-" + player + "-panel").classList.remove("winner")
     }
     activePlayer = Math.round(Math.random());
     setActivePlayer(activePlayer);
