@@ -20,7 +20,7 @@ Change the game to follow these rules:
 
 var roundScore, activePlayer, isOver, lastRoll, winningValue, inputWarning;
 var playerScores = {};
-var diceElements = document.querySelectorAll('[class^="dice-"]');
+var diceElements = document.querySelectorAll('[id^="dice-"]');
 var winningValueInput = document.getElementById("winning-score");
 var gameStatusMsg = document.getElementById("status-msg");
 
@@ -31,7 +31,6 @@ function newGame(){
     roundScore = 0;
     lastRoll = 0;
     for(var player in [0, 1]){
-        playerScores[player] = 0;
         setTotalScore(player, 0);
         setRoundScore(player, 0);
         document.getElementById("name-" + player).textContent = "Player " + (Number(player) + 1)
@@ -47,7 +46,7 @@ function newGame(){
 }
 
 function rollDice(){
-    if(isOver){return}
+    if(isOver){return} // Exit if game is over
 
     for(var i = 0; i < diceElements.length; i++){
         // Roll a six-sided die
@@ -64,8 +63,9 @@ function rollDice(){
             nextPlayer();
             setTurnOverMsg(activePlayer, "You rolled a 1.")
             return
-        } else if (roll === 6 & lastRoll === 6) {
-            roundScore += roll;
+        } else if (roll === 6 && lastRoll === 6) {
+            roundScore = 0;
+            setTotalScore(activePlayer, 0);
             nextPlayer();
             setTurnOverMsg(activePlayer, "You rolled two sixes in a row!")
             return
@@ -74,13 +74,12 @@ function rollDice(){
             lastRoll = roll;
         }
     }
-
     // Update the current score display
     setRoundScore(activePlayer, roundScore);
 }
 
 function nextPlayer(){
-    if(isOver){return}
+    if(isOver){return} // Exit if game is over
 
     // Update the player total score
     playerScores[activePlayer] = playerScores[activePlayer] + roundScore;

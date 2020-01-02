@@ -181,22 +181,22 @@ i {
 .btn-roll { top: 403px;}
 .btn-hold { top: 467px;}
 
-.dice-0 {
+.dice {
+    height: 100px;
+    box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.10);
+}
+#dice-0 {
     position: absolute;
     left: 40%;
     top: 220px;
     transform: translateX(-40%);
-    height: 100px;
-    box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.10);
 }
 
-.dice-1 {
+#dice-1 {
     position: absolute;
     left: 60%;
     top: 220px;
     transform: translateX(-60%);
-    height: 100px;
-    box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.10);
 }
 
 /* .winner { background-color: #fff; } */
