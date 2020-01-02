@@ -18,11 +18,11 @@ Change the game to follow these rules:
 3. Add another dice to the game, so that there are two dices now. The player looses his current score when one of them is a 1. (Hint: you will need CSS to position the second dice, so take a look at the CSS code for the first one.)
 */
 
-var roundScore, activePlayer, isOver, lastRoll, winningValue, inputWarning;
+var roundScore, activePlayer, gameOver, lastRoll, winningValue, inputWarning;
 var playerScores = {};
 var diceElements = document.querySelectorAll('[id^="dice-"]');
-var winningValueInput = document.getElementById("winning-score");
-var gameStatusMsg = document.getElementById("status-msg");
+var winningValueInputElement = document.getElementById("winning-score");
+var gameStatusMsgElement = document.getElementById("status-msg");
 
 // Set up the game board
 newGame();
@@ -39,21 +39,21 @@ function newGame(){
     activePlayer = Math.round(Math.random());
     setActivePlayer(activePlayer);
     setDiceDisplay("none");
-    gameStatusMsg.style.display = "none"
-    isOver = false;
+    gameStatusMsgElement.style.display = "none"
+    gameOver = false;
     inputWarning = false;
-    winningValue = winningValueInput.value
+    winningValue = winningValueInputElement.value
 }
 
 function rollDice(){
-    if(isOver){return} // Exit if game is over
+    if(gameOver){return}
 
     for(var i = 0; i < diceElements.length; i++){
         // Roll a six-sided die
         roll = Math.floor(Math.random() * 6) + 1
 
         // Update the dice display
-        gameStatusMsg.style.display = "none"
+        gameStatusMsgElement.style.display = "none"
         diceElements[i].src="dice-" + roll + ".png"
         diceElements[i].style.display = "block"
 
@@ -79,7 +79,7 @@ function rollDice(){
 }
 
 function nextPlayer(){
-    if(isOver){return} // Exit if game is over
+    if(gameOver){return}
 
     // Update the player total score
     playerScores[activePlayer] = playerScores[activePlayer] + roundScore;
@@ -101,8 +101,8 @@ function nextPlayer(){
 }
 
 function isWinner(player){
-    isOver = (playerScores[player] >= winningValue);
-    return isOver;
+    gameOver = (playerScores[player] >= winningValue);
+    return gameOver;
 }
 
 function setWinner(player){
@@ -110,14 +110,14 @@ function setWinner(player){
     document.querySelector(".player-" + player + "-panel").classList.add("winner")
     document.getElementById("name-" + player).textContent = "Winner!"
     setDiceDisplay("none")
-    gameStatusMsg.textContent = "GAME OVER"
-    gameStatusMsg.style.display = "block"
+    gameStatusMsgElement.textContent = "GAME OVER"
+    gameStatusMsgElement.style.display = "block"
 }
 
 function setTurnOverMsg(player, msg){
     setDiceDisplay("none")
-    gameStatusMsg.innerHTML = msg + "<br>Player " + (Number(player) + 1) + ", it's your turn!"
-    gameStatusMsg.style.display = "block"
+    gameStatusMsgElement.innerHTML = msg + "<br>Player " + (Number(player) + 1) + ", it's your turn!"
+    gameStatusMsgElement.style.display = "block"
 }
 
 function setRoundScore(player, score){
@@ -142,22 +142,22 @@ function setDiceDisplay(dispType){
 
 
 function warnUser(){
-    if(!inputWarning & !isOver){
+    if(!inputWarning & !gameOver){
         alert("Modifying the Winning Score will restart the game!");
         inputWarning = true;
     }
 }
 
 function updateWinningScore(){
-    if(winningValueInput.value !== winningValue){
-        winningValue = winningValueInput.value
+    if(winningValueInputElement.value !== winningValue){
+        winningValue = winningValueInputElement.value
         newGame()
     }
 }
 
 
-winningValueInput.addEventListener("click", warnUser);
-winningValueInput.addEventListener("oninput", updateWinningScore);
+winningValueInputElement.addEventListener("click", warnUser);
+winningValueInputElement.addEventListener("oninput", updateWinningScore);
 
 var newGameButton = document.getElementsByClassName("btn-new")[0];
 newGameButton.addEventListener("click", newGame);
