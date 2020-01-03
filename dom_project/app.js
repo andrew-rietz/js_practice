@@ -141,8 +141,8 @@ function setDiceDisplay(dispType){
 }
 
 
-function warnUser(){
-    if(!inputWarning & !gameOver){
+function warnUserBeforeRestart(){
+    if(!inputWarning && !gameOver){
         alert("Modifying the Winning Score will restart the game!");
         inputWarning = true;
     }
@@ -156,7 +156,7 @@ function updateWinningScore(){
 }
 
 
-winningValueInputElement.addEventListener("click", warnUser);
+winningValueInputElement.addEventListener("click", warnUserBeforeRestart);
 winningValueInputElement.addEventListener("oninput", updateWinningScore);
 
 var newGameButton = document.getElementsByClassName("btn-new")[0];
