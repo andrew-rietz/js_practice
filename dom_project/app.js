@@ -28,6 +28,7 @@ var gameStatusMsgElement = document.getElementById("status-msg");
 newGame();
 
 function newGame(){
+    // Reset all variables and styling for a fresh game
     roundScore = 0;
     lastRoll = 0;
     for(var player in [0, 1]){
@@ -46,6 +47,7 @@ function newGame(){
 }
 
 function rollDice(){
+    // If game is not over, roll dice and check for any actions based on shown pips
     if(gameOver){return}
 
     for(var i = 0; i < diceElements.length; i++){
@@ -79,6 +81,7 @@ function rollDice(){
 }
 
 function nextPlayer(){
+    // If game is not over, set the active players total score and activate the next player
     if(gameOver){return}
 
     // Update the player total score
@@ -106,6 +109,7 @@ function isWinner(player){
 }
 
 function setWinner(player){
+    // Update underlying html styling to indicate game is over
     document.querySelector(".player-" + player + "-panel").classList.remove("active")
     document.querySelector(".player-" + player + "-panel").classList.add("winner")
     document.getElementById("name-" + player).textContent = "Winner!"
@@ -115,6 +119,7 @@ function setWinner(player){
 }
 
 function setTurnOverMsg(player, msg){
+    // Provide prompts in the middle of the screen for special events
     setDiceDisplay("none")
     gameStatusMsgElement.innerHTML = msg + "<br>Player " + (Number(player) + 1) + ", it's your turn!"
     gameStatusMsgElement.style.display = "block"
