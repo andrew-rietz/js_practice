@@ -36,7 +36,6 @@ var Question = function(prompt, options, correctAnswer){
     this.options = options;
     this.correctAnswer = correctAnswer;
     this.toConsole = function(){
-        console.log('----------------------------------------')
         console.log(`Question: ${this.prompt}`)
         for (let [respOption, respText] of Object.entries(this.options)){
             console.log(`  ${respOption}: \"${respText}\"`)
@@ -87,23 +86,24 @@ function quizGame(quizQuestions){
         return userExit
     }
 
-    function incrementScore(){
+    function keepScore(){
         var score = 0;
-        return function() {
-            score++;
-            console.log(`Your score is ${score} points. Good job!`)
+        return function(increment) {
+            if (increment) {score++}
+            console.log('----------------------------------------')
+            console.log(`Your score is ${score} points.`)
         }
     }
 
-    scorePlusOne = incrementScore()
-    promptUser();
+    incrementScore = keepScore()
     return function() {
         currentQuestion = selectQuestion();
         currentQuestion.toConsole();
+        var userResponse = window.prompt(
+            "Please enter the correct answer (only include the " +
+            "response number, not all of the text)");
         if(!exitNow(userResponse)){
-            // console.log(theQuestion.checkAnswer(userResponse))
-            if(theQuestion.checkAnswer(userResponse)){scorePlusOne()}
-            promptUser();
+            incrementScore(currentQuestion.checkAnswer(userResponse))
         }
     }    
 };
