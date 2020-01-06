@@ -54,29 +54,23 @@ var Question = function(prompt, options, correctAnswer){
 
 var question0 = new Question(
     "Are weekends better than weekdays?",
-    {
-        "0": "Yes",
-        "1": "No",
-    },
+    {"0": "Yes",
+     "1": "No"},
     "0"
 )
 var question1 = new Question(
     "Get up right away or snooze?",
-    {
-        "0": "Get up right away",
-        "1": "Snooze",
-        "2": "I don't sleep",
-    },
+    {"0": "Get up right away",
+     "1": "Snooze",
+     "2": "I don't sleep"},
     "1"
 )
 var question2 = new Question(
     "What's an example of an object in javascript?",
-    {
-        "0": "A function",
-        "1": "A class",
-        "2": "An array",
-        "3": "All of the above",
-    },
+    {"0": "A function",
+     "1": "A class",
+     "2": "An array",
+     "3": "All of the above"},
     "3"
 )
 
