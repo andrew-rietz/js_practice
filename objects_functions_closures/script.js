@@ -31,91 +31,92 @@ c) correct answer (I would use a number for this)
 11. Display the score in the console. Use yet another method for this.
 */
 
-var Question = function(prompt, options, correctAnswer){
-    this.prompt = prompt;
-    this.options = options;
-    this.correctAnswer = correctAnswer;
-    this.toConsole = function(){
-        console.log(`Question: ${this.prompt}`)
-        for (let [respOption, respText] of Object.entries(this.options)){
-            console.log(`  ${respOption}: \"${respText}\"`)
+( function() {
+    var Question = function(prompt, options, correctAnswer){
+        this.prompt = prompt;
+        this.options = options;
+        this.correctAnswer = correctAnswer;
+        this.toConsole = function(){
+            console.log(`Question: ${this.prompt}`)
+            for (let [respOption, respText] of Object.entries(this.options)){
+                console.log(`  ${respOption}: \"${respText}\"`)
+            }
         }
-    }
-    this.checkAnswer = function(userResp){
-        if (userResp === this.correctAnswer) {
-            console.log("Correct! Nice work.")
-        } else {
-            console.log("Oops! Try again.")
-        }
-        return (userResp === this.correctAnswer)
-    }
-}
-
-var question0 = new Question(
-    "Are weekends better than weekdays?",
-    {"0": "Yes",
-     "1": "No"},
-    "0"
-)
-var question1 = new Question(
-    "Get up right away or snooze?",
-    {"0": "Get up right away",
-     "1": "Snooze",
-     "2": "I don't sleep"},
-    "1"
-)
-var question2 = new Question(
-    "What's an example of an object in javascript?",
-    {"0": "A function",
-     "1": "A class",
-     "2": "An array",
-     "3": "All of the above"},
-    "3"
-)
-
-var quizQuestions = [question0, question1, question2];
-
-function quizGame(quizQuestions){
-    function selectQuestion(){
-        var selectedQuestion = Math.floor(Math.random() * quizQuestions.length);
-        return quizQuestions[selectedQuestion]
-    }
-
-    function exitNow(userResponse){
-        if (String(userResponse).toLowerCase() === "exit") {userExit = true}
-        return userExit
-    }
-
-    function keepScore(){
-        var score = 0;
-        return function(increment) {
-            if (increment) {score++}
-            console.log('----------------------------------------')
-            console.log(`Your score is ${score} points.`)
+        this.checkAnswer = function(userResp){
+            if (userResp === this.correctAnswer) {
+                console.log("Correct! Nice work.")
+            } else {
+                console.log("Oops! Try again.")
+            }
+            return (userResp === this.correctAnswer)
         }
     }
 
-    incrementScore = keepScore()
-    return function() {
-        currentQuestion = selectQuestion();
-        currentQuestion.toConsole();
-        var userResponse = window.prompt(
-            "Please enter the correct answer (only include the " +
-            "response number, not all of the text)");
-        if(!exitNow(userResponse)){
-            incrementScore(currentQuestion.checkAnswer(userResponse))
+    var question0 = new Question(
+        "Are weekends better than weekdays?",
+        {"0": "Yes",
+        "1": "No"},
+        "0"
+    )
+    var question1 = new Question(
+        "Get up right away or snooze?",
+        {"0": "Get up right away",
+        "1": "Snooze",
+        "2": "I don't sleep"},
+        "1"
+    )
+    var question2 = new Question(
+        "What's an example of an object in javascript?",
+        {"0": "A function",
+        "1": "A class",
+        "2": "An array",
+        "3": "All of the above"},
+        "3"
+    )
+
+    var quizQuestions = [question0, question1, question2];
+
+    function quizGame(quizQuestions){
+        function selectQuestion(){
+            var selectedQuestion = Math.floor(Math.random() * quizQuestions.length);
+            return quizQuestions[selectedQuestion]
         }
-    }    
-};
+
+        function exitNow(userResponse){
+            if (String(userResponse).toLowerCase() === "exit") {userExit = true}
+            return userExit
+        }
+
+        function keepScore(){
+            var score = 0;
+            return function(increment) {
+                if (increment) {score++}
+                console.log('----------------------------------------')
+                console.log(`Your score is ${score} points.`)
+            }
+        }
+
+        incrementScore = keepScore()
+        return function() {
+            currentQuestion = selectQuestion();
+            currentQuestion.toConsole();
+            var userResponse = window.prompt(
+                "Please enter the correct answer (only include the " +
+                "response number, not all of the text)");
+            if(!exitNow(userResponse)){
+                incrementScore(currentQuestion.checkAnswer(userResponse))
+            }
+        }    
+    };
 
 
-var userExit = false;
-function playGame(){
-    var game = quizGame(quizQuestions);
-    while (!userExit) {
-        game();
+    var userExit = false;
+    function playGame(){
+        var game = quizGame(quizQuestions);
+        while (!userExit) {
+            game();
+        }
     }
-}
 
-playGame();
-
+    playGame();
+})();
