@@ -82,11 +82,6 @@ function quizGame(quizQuestions){
         return quizQuestions[selectedQuestion]
     }
 
-    function promptUser(){
-        theQuestion = selectQuestion();
-        theQuestion.toConsole();
-    }
-
     function exitNow(userResponse){
         if (String(userResponse).toLowerCase() === "exit") {userExit = true}
         return userExit
@@ -103,7 +98,8 @@ function quizGame(quizQuestions){
     scorePlusOne = incrementScore()
     promptUser();
     return function() {
-        var userResponse = window.prompt("Please enter the correct answer (only include the response number, not all of the text)");
+        currentQuestion = selectQuestion();
+        currentQuestion.toConsole();
         if(!exitNow(userResponse)){
             // console.log(theQuestion.checkAnswer(userResponse))
             if(theQuestion.checkAnswer(userResponse)){scorePlusOne()}
