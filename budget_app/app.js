@@ -55,13 +55,22 @@ var dataController = (function() {
 var UIController = (function() {
     // Responsible for updating the UI
 
+    var DOMelements = {
+        inputPositiveOrNegative: document.querySelector(".add__type"),
+        inputDescription: document.querySelector(".add__description"),
+        inputValue: document.querySelector(".add__value"),
+    }
+
     return {
         getInputs: function(){
             return {
-                positiveOrNegative: document.querySelector(".add__type").value, // either 'income' or 'expense'
-                description: document.querySelector(".add__description").value,
-                value: document.querySelector(".add__value").value,
+                positiveOrNegative: DOMelements.inputPositiveOrNegative.value, // either 'income' or 'expense'
+                description: DOMelements.inputDescription.value,
+                value: DOMelements.inputValue.value,
             }
+        },
+        getDOMelements: function(){
+            return { DOMelements }
         }
     }
 
