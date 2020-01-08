@@ -77,8 +77,12 @@ var appController = (function(dataCtrlr, UICtrlr) {
         // Display the overall budget
         // UICtrlr.dispTotal()
     }
-    
+
     // Initial entry into the app is dependent on the <button> 'add__button'
     document.querySelector(".add__btn").addEventListener("click", _addItem);
+
+    document.addEventListener("keypress", function(e){ // Pass the event object to the function
+        if (e.key === "Enter") { _addItem() } // Access the 'key' attribute of the event object
+    })
 
 })(dataController, UIController);
