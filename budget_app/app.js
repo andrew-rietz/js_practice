@@ -59,24 +59,26 @@ var UIController = (function() {
 
 var appController = (function(dataCtrlr, UICtrlr) {
     // Ties the data and UI portions together and tells each when to execute
-    // Initial entry into the app is dependent on the <button> 'add__button'
-    document.querySelector(".add__btn").addEventListener("click", function(){
+    var _addItem = function() {
         // Get the form inputs (add__type, add__description, add__value)
-        positiveOrNegative = document.querySelector(".add__type").value
-        description = document.querySelector(".add__description").value
-        value = document.querySelector(".add__value").value
+        positiveOrNegative = document.querySelector(".add__type").value;
+        description = document.querySelector(".add__description").value;
+        value = document.querySelector(".add__value").value;
 
         // Add the item to our underlying data
-        dataCtrlr.addRecord(positiveOrNegative, description, value)
+        dataCtrlr.addRecord(positiveOrNegative, description, value);
 
         // // Calculate the overall budget
-        dataCtrlr.calcTotal()
+        console.log(dataCtrlr.calcTotal())
 
         // Add the item to the table at the bottom of the screen
-        // UICtrlr.updateTables()
+        // UICtrlr.updateTables();
 
         // Display the overall budget
         // UICtrlr.dispTotal()
-    });
+    }
+    
+    // Initial entry into the app is dependent on the <button> 'add__button'
+    document.querySelector(".add__btn").addEventListener("click", _addItem);
 
 })(dataController, UIController);
