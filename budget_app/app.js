@@ -55,18 +55,30 @@ var dataController = (function() {
 var UIController = (function() {
     // Responsible for updating the UI
 
+    return {
+        getInputs: function(){
+            return {
+                positiveOrNegative: document.querySelector(".add__type").value, // either 'income' or 'expense'
+                description: document.querySelector(".add__description").value,
+                value: document.querySelector(".add__value").value,
+            }
+        }
+    }
+
 })();
 
 var appController = (function(dataCtrlr, UICtrlr) {
     // Ties the data and UI portions together and tells each when to execute
     var _addItem = function() {
         // Get the form inputs (add__type, add__description, add__value)
-        positiveOrNegative = document.querySelector(".add__type").value; // either 'income' or 'expense'
-        description = document.querySelector(".add__description").value;
-        value = document.querySelector(".add__value").value;
-
+        var pageInputs = UICtrlr.getInputs();
+        
         // Add the item to our underlying data
-        dataCtrlr.addRecord(positiveOrNegative, description, value);
+        dataCtrlr.addRecord(
+            pageInputs.positiveOrNegative,
+            pageInputs.description,
+            pageInputs.value
+        );
 
         // // Calculate the overall budget
         console.log(dataCtrlr.calcTotal())
