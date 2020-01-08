@@ -14,7 +14,7 @@ var dataController = (function() {
         data.descriptions.push(description)
     }
 
-    var _isPositive = function (number) {
+    var _recordIsIncome = function (number) {
         return number >= 0
     }
 
@@ -24,7 +24,7 @@ var dataController = (function() {
         return data.values.reduce(
             callbackFn=function(total, currentItem) {
                 return total + (
-                    _isPositive(currentItem) === positiveCashflow ? 
+                    _recordIsIncome(currentItem) === positiveCashflow ? 
                     currentItem :
                     0
                 )
@@ -61,7 +61,7 @@ var appController = (function(dataCtrlr, UICtrlr) {
     // Ties the data and UI portions together and tells each when to execute
     var _addItem = function() {
         // Get the form inputs (add__type, add__description, add__value)
-        positiveOrNegative = document.querySelector(".add__type").value;
+        positiveOrNegative = document.querySelector(".add__type").value; // either 'income' or 'expense'
         description = document.querySelector(".add__description").value;
         value = document.querySelector(".add__value").value;
 
