@@ -39,6 +39,7 @@ var dataController = (function() {
         }
         data.cashflow[incomeOrExpense].push(newRecord);
         _setTotals();
+        return newRecord
     }
 
     var _setTotals = function() {
@@ -73,16 +74,33 @@ var UIController = (function() {
         budgetSummaryValue: document.querySelector(".budget__value"),
         incomeSummaryValue: document.querySelector(".budget__income--value"),
         incomeSummaryPct: document.querySelector(".budget__income--percentage"),
+        incomeTable: document.querySelector(".income__list"),
         expenseSummaryValue: document.querySelector(".budget__expenses--value"),
         expenseSummaryPct: document.querySelector(".budget__expenses--percentage"),
+        expenseTable: document.querySelector(".expenses__list"),
     }
 
-    var _updateDisplay = function(overallBudget, overallIncome, overallExpenses) {
+    var _updateSummaryDisplay = function(overallBudget, overallIncome, overallExpenses) {
         DOMelements.budgetSummaryValue.textContent = overallBudget;
         DOMelements.incomeSummaryValue.textContent = overallIncome;
         // DOMelements.incomeSummaryPct.textContent = overallIncome / overallBudget;
         DOMelements.expenseSummaryValue.textContent = overallExpenses;
         // DOMelements.expenseSummaryPct.textContent = overallExpenses / overallIncome;
+    }
+
+    var _updateTabularDisplay = function(tableRecord, incomeOrExpense) {
+        var pct_html = (incomeOrExpense === "expense") ? `<div class="item__percentage">21%</div>` : ``
+        var html = `<div class="item clearfix" id="income-${tableRecord.id}">`
+                    + `<div class="item__description">${tableRecord.description}</div>`
+                    + `<div class="right clearfix">`
+                    + `<div class="item__value">${tableRecord.value}</div>`
+                    + `${pct_html}`
+                    + `<div class="item__delete">`
+                    + `<button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button>`
+                    + `</div></div></div>`
+        
+        // Insert html into the DOM
+        DOMelements[incomeOrExpense + "Table"].insertAdjacentHTML("beforeend", html)
     }
 
     return {
@@ -96,7 +114,8 @@ var UIController = (function() {
         getDOMelements: function(){
             return DOMelements
         },
-        updateDisplay: _updateDisplay,
+        updateSummaryDisplay: _updateSummaryDisplay,
+        updateTabularDisplay: _updateTabularDisplay,
     }
 
 })();
@@ -115,10 +134,11 @@ var appController = (function(dataCtrlr, UICtrlr) {
 
     var _addItem = function() {
         // Get the form inputs (add__type, add__description, add__value)
+        var newRecord;
         var pageInputs = UICtrlr.getInputs();
         
         // Add the item to our underlying data
-        dataCtrlr.addRecord(
+        newRecord = dataCtrlr.addRecord(
             pageInputs.incomeOrExpense,
             pageInputs.description,
             pageInputs.value
@@ -128,10 +148,10 @@ var appController = (function(dataCtrlr, UICtrlr) {
         // dataCtrlr.getTotal()
 
         // Add the item to the table at the bottom of the screen
-        // UICtrlr.updateTables();
+        UICtrlr.updateTabularDisplay(newRecord, pageInputs.incomeOrExpense);
 
         // Display the overall budget
-        UICtrlr.updateDisplay(
+        UICtrlr.updateSummaryDisplay(
             dataCtrlr.data.totals.overall,
             dataCtrlr.data.totals.income,
             dataCtrlr.data.totals.expense)
