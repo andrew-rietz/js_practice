@@ -59,6 +59,19 @@ var UIController = (function() {
         inputPositiveOrNegative: document.querySelector(".add__type"),
         inputDescription: document.querySelector(".add__description"),
         inputValue: document.querySelector(".add__value"),
+        budgetSummaryValue: document.querySelector(".budget__value"),
+        incomeSummaryValue: document.querySelector(".budget__income--value"),
+        incomeSummaryPct: document.querySelector(".budget__income--percentage"),
+        expenseSummaryValue: document.querySelector(".budget__expenses--value"),
+        expenseSummaryPct: document.querySelector(".budget__expenses--percentage"),
+    }
+
+    var _updateDisplay = function(overallBudget, overallIncome, overallExpenses) {
+        DOMelements.budgetSummaryValue.textContent = overallBudget;
+        DOMelements.incomeSummaryValue.textContent = overallIncome;
+        // DOMelements.incomeSummaryPct.textContent = overallIncome / overallBudget;
+        DOMelements.expenseSummaryValue.textContent = overallExpenses;
+        DOMelements.expenseSummaryPct.textContent = overallExpenses / overallIncome;
     }
 
     return {
@@ -71,7 +84,8 @@ var UIController = (function() {
         },
         getDOMelements: function(){
             return { DOMelements }
-        }
+        },
+        updateDisplay: _updateDisplay,
     }
 
 })();
@@ -96,7 +110,7 @@ var appController = (function(dataCtrlr, UICtrlr) {
         // UICtrlr.updateTables();
 
         // Display the overall budget
-        // UICtrlr.dispTotal()
+        UICtrlr.updateDisplay(dataCtrlr.calcTotal(), dataCtrlr.calcIncome(), dataCtrlr.calcExpenses())
     }
 
     // Initial entry into the app is dependent on the <button> 'add__button'
