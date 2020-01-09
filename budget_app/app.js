@@ -38,7 +38,6 @@ var dataController = (function() {
             newRecord = new Expense(ID, description, Number(value) * -1);
         }
         data.cashflow[incomeOrExpense].push(newRecord);
-        _setTotals();
         return newRecord
     }
 
@@ -58,6 +57,7 @@ var dataController = (function() {
 
     return {
         addRecord: _addRecord,
+        setTotals: _setTotals,
         data: data,
     }
 
@@ -145,7 +145,7 @@ var appController = (function(dataCtrlr, UICtrlr) {
         );
 
         // // Calculate the overall budget
-        // dataCtrlr.getTotal()
+        dataCtrlr.setTotals()
 
         // Add the item to the table at the bottom of the screen
         UICtrlr.updateTabularDisplay(newRecord, pageInputs.incomeOrExpense);
