@@ -65,7 +65,7 @@ var UIController = (function() {
     // Responsible for updating the UI
 
     var DOMelements = {
-        inputPositiveOrNegative: document.querySelector(".add__type"),
+        inputIncomeOrExpense: document.querySelector(".add__type"),
         inputDescription: document.querySelector(".add__description"),
         inputValue: document.querySelector(".add__value"),
         inputButton: document.querySelector(".add__btn"),
@@ -87,7 +87,7 @@ var UIController = (function() {
     return {
         getInputs: function(){
             return {
-                positiveOrNegative: DOMelements.inputPositiveOrNegative.value, // either 'income' or 'expense'
+                incomeOrExpense: DOMelements.inputIncomeOrExpense.value, // either 'income' or 'expense'
                 description: DOMelements.inputDescription.value,
                 value: DOMelements.inputValue.value,
             }
@@ -119,7 +119,7 @@ var appController = (function(dataCtrlr, UICtrlr) {
         
         // Add the item to our underlying data
         dataCtrlr.addRecord(
-            pageInputs.positiveOrNegative,
+            pageInputs.incomeOrExpense,
             pageInputs.description,
             pageInputs.value
         );
