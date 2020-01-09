@@ -3,51 +3,60 @@
 var dataController = (function() {
     // Responsible for tracking / updating the underlying data
 
+    var Expense = function(id, description, value){
+        this.id = id;
+        this.description = description;
+        this.value = value;
+    }
+
+    var Income = function(id, description, value){
+        this.id = id;
+        this.description = description;
+        this.value = value;
+    }
+
     var data = {
-        values: [],
-        descriptions: [],
+        cashflow: {
+            income: [],
+            expense: [],
+        },
+        totals: {
+            income: 0,
+            expense: 0,
+        }
     }
 
-    var _addRecord = function(positiveOrNegative, description, value){
-        multiplier = positiveOrNegative === "income" ? 1 : -1;
-        data.values.push(multiplier * value);
-        data.descriptions.push(description)
+    var _addRecord = function(incomeOrExpense, description, value){
+        if (incomeOrExpense === "income"){
+            data.cashflow.income.push(new Income(
+                data.cashflow.income.length,
+                description,
+                value
+            ))
+        } else {
+            data.cashflow.expense.push(new Expense(
+                data.cashflow.expense.length,
+                description,
+                value
+            ))
+        }
     }
 
-    var _recordIsIncome = function (number) {
-        return number >= 0
-    }
-
-    var _sumByType = function(cashflow) {
-        positiveCashflow = (cashflow === "income")
-
-        return data.values.reduce(
+    var sumCashflow = function(cashflow) {
+        return cashflow.reduce(
             callbackFn=function(total, currentItem) {
-                return total + (
-                    _recordIsIncome(currentItem) === positiveCashflow ? 
-                    currentItem :
-                    0
-                )
+                return total + currentItem
             },
             initialValue=0)
     }
 
-    var _sumIncome = function() {
-        return _sumByType("income")
-    }
-
-    var _sumExpenses = function () {
-        return _sumByType("expense")
-    }
-    var _calcTotal = function () {
-        return _sumIncome() + _sumExpenses()
-    }
-
     return {
         addRecord: _addRecord,
-        calcIncome: _sumIncome,
-        calcExpenses: _sumExpenses,
-        calcTotal: _calcTotal,
+        getTotalIncome: sumCashflow(data.cashflow.income),
+        getTotalExpenses: sumCashflow(data.cashflow.expense),
+        getTotal: sumCashflow(Array.prototype.concat(
+            data.cashflow.income, data.cashflow.expense)
+        ),
     }
 
 })();
