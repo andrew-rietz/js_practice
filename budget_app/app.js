@@ -21,42 +21,43 @@ var dataController = (function() {
             expense: [],
         },
         totals: {
+            overall: 0,
             income: 0,
             expense: 0,
         }
     }
 
     var _addRecord = function(incomeOrExpense, description, value){
+        var newRecord, ID;
+
+        // set ID to the last ID in the array, + 1
+        ID = data.cashflow[incomeOrExpense][data.cashflow[incomeOrExpense].length - 1] + 1;
         if (incomeOrExpense === "income"){
-            data.cashflow.income.push(new Income(
-                data.cashflow.income.length,
-                description,
-                value
-            ))
+            newRecord = new Income(ID, description, Number(value));
         } else {
-            data.cashflow.expense.push(new Expense(
-                data.cashflow.expense.length,
-                description,
-                value
-            ))
+            newRecord = new Expense(ID, description, Number(value) * -1);
         }
+        data.cashflow[incomeOrExpense].push(newRecord);
+        _setTotals();
+    }
+
+    var _setTotals = function() {
+        data.totals.income = sumCashflow(data.cashflow.income)
+        data.totals.expense = sumCashflow(data.cashflow.expense)
+        data.totals.overall = data.totals.income + data.totals.expense
     }
 
     var sumCashflow = function(cashflow) {
         return cashflow.reduce(
             callbackFn=function(total, currentItem) {
-                return total + currentItem
+                return total + currentItem.value
             },
             initialValue=0)
     }
 
     return {
         addRecord: _addRecord,
-        getTotalIncome: sumCashflow(data.cashflow.income),
-        getTotalExpenses: sumCashflow(data.cashflow.expense),
-        getTotal: sumCashflow(Array.prototype.concat(
-            data.cashflow.income, data.cashflow.expense)
-        ),
+        data: data,
     }
 
 })();
@@ -81,7 +82,7 @@ var UIController = (function() {
         DOMelements.incomeSummaryValue.textContent = overallIncome;
         // DOMelements.incomeSummaryPct.textContent = overallIncome / overallBudget;
         DOMelements.expenseSummaryValue.textContent = overallExpenses;
-        DOMelements.expenseSummaryPct.textContent = overallExpenses / overallIncome;
+        // DOMelements.expenseSummaryPct.textContent = overallExpenses / overallIncome;
     }
 
     return {
@@ -104,9 +105,8 @@ var appController = (function(dataCtrlr, UICtrlr) {
     // Ties the data and UI portions together and tells each when to execute
 
     var setupEventListeners = function () {
-        DOM = UICtrlr.DOMelements;
+        var DOM = UICtrlr.getDOMelements()
 
-        // Initial entry into the app is dependent on the <button> 'add__button'
         DOM.inputButton.addEventListener("click", _addItem);
         document.addEventListener("keypress", function(e){ // Pass the event object to the function
             if (e.key === "Enter") { _addItem() } // Access the 'key' attribute of the event object
@@ -125,13 +125,16 @@ var appController = (function(dataCtrlr, UICtrlr) {
         );
 
         // // Calculate the overall budget
-        console.log(dataCtrlr.calcTotal())
+        // dataCtrlr.getTotal()
 
         // Add the item to the table at the bottom of the screen
         // UICtrlr.updateTables();
 
         // Display the overall budget
-        UICtrlr.updateDisplay(dataCtrlr.calcTotal(), dataCtrlr.calcIncome(), dataCtrlr.calcExpenses())
+        UICtrlr.updateDisplay(
+            dataCtrlr.data.totals.overall,
+            dataCtrlr.data.totals.income,
+            dataCtrlr.data.totals.expense)
     }
 
     return {
