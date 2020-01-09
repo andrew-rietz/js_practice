@@ -93,7 +93,7 @@ var UIController = (function() {
             }
         },
         getDOMelements: function(){
-            return { DOMelements }
+            return DOMelements
         },
         updateDisplay: _updateDisplay,
     }
