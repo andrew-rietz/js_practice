@@ -59,6 +59,7 @@ var UIController = (function() {
         inputPositiveOrNegative: document.querySelector(".add__type"),
         inputDescription: document.querySelector(".add__description"),
         inputValue: document.querySelector(".add__value"),
+        inputButton: document.querySelector(".add__btn"),
         budgetSummaryValue: document.querySelector(".budget__value"),
         incomeSummaryValue: document.querySelector(".budget__income--value"),
         incomeSummaryPct: document.querySelector(".budget__income--percentage"),
@@ -92,6 +93,17 @@ var UIController = (function() {
 
 var appController = (function(dataCtrlr, UICtrlr) {
     // Ties the data and UI portions together and tells each when to execute
+
+    var setupEventListeners = function () {
+        DOM = UICtrlr.DOMelements;
+
+        // Initial entry into the app is dependent on the <button> 'add__button'
+        DOM.inputButton.addEventListener("click", _addItem);
+        document.addEventListener("keypress", function(e){ // Pass the event object to the function
+            if (e.key === "Enter") { _addItem() } // Access the 'key' attribute of the event object
+        })
+    }
+
     var _addItem = function() {
         // Get the form inputs (add__type, add__description, add__value)
         var pageInputs = UICtrlr.getInputs();
@@ -113,11 +125,13 @@ var appController = (function(dataCtrlr, UICtrlr) {
         UICtrlr.updateDisplay(dataCtrlr.calcTotal(), dataCtrlr.calcIncome(), dataCtrlr.calcExpenses())
     }
 
-    // Initial entry into the app is dependent on the <button> 'add__button'
-    document.querySelector(".add__btn").addEventListener("click", _addItem);
-
-    document.addEventListener("keypress", function(e){ // Pass the event object to the function
-        if (e.key === "Enter") { _addItem() } // Access the 'key' attribute of the event object
-    })
+    return {
+        init: function() {
+            setupEventListeners();
+        }
+    }
+    
 
 })(dataController, UIController);
+
+appController.init()
