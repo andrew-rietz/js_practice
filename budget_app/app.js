@@ -128,6 +128,7 @@ var UIController = (function() {
         }
     }
 
+    var _addRowToTabularDisplay = function(tableRecord, incomeOrExpense, overallPct) {
         var pct_html = (incomeOrExpense === "expenses") ? `<div class="item__percentage">21%</div>` : ``
         var html = `<div class="item clearfix" id="${incomeOrExpense}-${tableRecord.id}">`
                     + `<div class="item__description">${tableRecord.description}</div>`
@@ -167,6 +168,7 @@ var UIController = (function() {
             return DOMelements
         },
         updateSummaryDisplay: _updateSummaryDisplay,
+        addRowToTabularDisplay: _addRowToTabularDisplay,
         delRowFromTabularDisplay: _delRowFromTabularDisplay,
         clearFields: _clearFields,
     }
@@ -214,6 +216,9 @@ var appController = (function(dataCtrlr, UICtrlr) {
         _updateSummary();
 
         // Add the item to the table at the bottom of the screen
+        UICtrlr.addRowToTabularDisplay(newRecord, pageInputs.incomeOrExpense);
+    }
+
     var _deleteTableItem = function(tableRowID) {
         var elementToRemove = document.getElementById(tableRowID);
         
