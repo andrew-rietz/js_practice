@@ -68,7 +68,7 @@ var dataController = (function() {
         data.totals.expense = sumCashflow(data.cashflow.expense)
         data.totals.overall = data.totals.income - data.totals.expense
         data.pct.overall = data.totals.income ? 
-                           Math.round(data.totals.expense / data.totals.income, 2) * 100 : 
+                           Math.round(data.totals.expense / data.totals.income * 100, 2) : 
                            -1
     }
 
@@ -123,9 +123,8 @@ var UIController = (function() {
         DOMelements.expenseSummaryValue.textContent = overallExpenses;
         DOMelements.expenseSummaryPct.textContent =  overallPct;
 
-        if (overallPct <= 0){
-            DOMelements.expenseSummaryPct.style.visibility = "hidden"
-        }
+        elementVisibility = overallPct <= 0 ? "hidden" : "visible"
+        DOMelements.expenseSummaryPct.style.visibility = elementVisibility
     }
 
     var _addRowToTabularDisplay = function(tableRecord, incomeOrExpense, overallPct) {
