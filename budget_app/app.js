@@ -68,7 +68,7 @@ var dataController = (function() {
         data.totals.expense = sumCashflow(data.cashflow.expense)
         data.totals.overall = data.totals.income - data.totals.expense
         data.pct.overall = data.totals.income ? 
-                           Math.round(data.totals.expense / data.totals.income * 100, 2) : 
+                           Math.round(data.totals.expense / data.totals.income * 100) : 
                            -1
     }
 
