@@ -103,6 +103,15 @@ var UIController = (function() {
         DOMelements[incomeOrExpense + "Table"].insertAdjacentHTML("beforeend", html)
     }
 
+    var _clearFields = function(){
+        fieldsToClear = [DOMelements.inputDescription,
+                         DOMelements.inputValue];
+        fieldsToClear.forEach( function(field) {
+            field.value = '';
+        });
+        DOMelements.inputDescription.focus()
+    }
+
     return {
         getInputs: function(){
             return {
@@ -116,6 +125,7 @@ var UIController = (function() {
         },
         updateSummaryDisplay: _updateSummaryDisplay,
         updateTabularDisplay: _updateTabularDisplay,
+        clearFields: _clearFields,
     }
 
 })();
@@ -143,6 +153,7 @@ var appController = (function(dataCtrlr, UICtrlr) {
             pageInputs.description,
             pageInputs.value
         );
+        UICtrlr.clearFields()
 
         // // Calculate the overall budget
         dataCtrlr.setTotals()
