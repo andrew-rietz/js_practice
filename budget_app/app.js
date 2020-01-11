@@ -50,6 +50,15 @@ var dataController = (function() {
                            -1
     }
 
+    var _getTotals = function() {
+        return {
+            income: data.totals.income,
+            expenses: data.totals.expense,
+            overall: data.totals.overall,
+            pct: data.pct.overall,
+        }
+    }
+
     var sumCashflow = function(cashflow) {
         return cashflow.reduce(
             callbackFn=function(total, currentItem) {
@@ -61,6 +70,7 @@ var dataController = (function() {
     return {
         addRecord: _addRecord,
         setTotals: _setTotals,
+        getTotals: _getTotals,
         data: data,
     }
 
