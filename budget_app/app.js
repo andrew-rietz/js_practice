@@ -112,9 +112,8 @@ var UIController = (function() {
         }
     }
 
-    var _updateTabularDisplay = function(tableRecord, incomeOrExpense) {
-        var pct_html = (incomeOrExpense === "expense") ? `<div class="item__percentage">21%</div>` : ``
-        var html = `<div class="item clearfix" id="income-${tableRecord.id}">`
+        var pct_html = (incomeOrExpense === "expenses") ? `<div class="item__percentage">21%</div>` : ``
+        var html = `<div class="item clearfix" id="${incomeOrExpense}-${tableRecord.id}">`
                     + `<div class="item__description">${tableRecord.description}</div>`
                     + `<div class="right clearfix">`
                     + `<div class="item__value">${tableRecord.value}</div>`
