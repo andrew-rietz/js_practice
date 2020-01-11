@@ -13,6 +13,8 @@ var dataController = (function() {
     Expense.prototype.calcPercentage = function(totalIncome){
         if (totalIncome > 0){
             this.percentage = Math.round(this.value / totalIncome * 100);
+        } else {
+            this.percentage = 0
         }
     }
 
@@ -93,6 +95,22 @@ var dataController = (function() {
         }
     }
 
+    var _setPercents = function(){
+        data.cashflow.expense.forEach( function(expense) {
+            expense.calcPercentage(data.totals.income);
+        });
+    }
+
+    var _getPercents = function(){
+        var expensePercents = data.cashflow.expense.map(function(element){
+            return {
+                id: element.id,
+                pct: element.getPercentage(),
+            }
+        })
+        return expensePercents;
+    }
+
     var sumCashflow = function(cashflow) {
         return cashflow.reduce(
             callbackFn=function(total, currentItem) {
@@ -106,6 +124,8 @@ var dataController = (function() {
         delRecord: _delRecord,
         setTotals: _setTotals,
         getTotals: _getTotals,
+        setPercents: _setPercents,
+        getPercents: _getPercents,
         data: data,
     }
 
@@ -140,7 +160,7 @@ var UIController = (function() {
     }
 
     var _addRowToTabularDisplay = function(tableRecord, incomeOrExpense, overallPct) {
-        var pct_html = (incomeOrExpense === "expenses") ? `<div class="item__percentage">21%</div>` : ``
+        var pct_html = (incomeOrExpense === "expense") ? `<div class="item__percentage">---</div>` : ``
         var html = `<div class="item clearfix" id="${incomeOrExpense}-${tableRecord.id}">`
                     + `<div class="item__description">${tableRecord.description}</div>`
                     + `<div class="right clearfix">`
@@ -167,6 +187,15 @@ var UIController = (function() {
         DOMelements.inputDescription.focus()
     }
 
+    var _setExpensePercentages = function(expenses){
+        // each expense is an object of the format: {id: element.id, pct: element.percentage}
+        expenses.forEach( function(element){
+            tableRecord = document.getElementById("expense-" + element.id)
+            pctElement = tableRecord.querySelector(".item__percentage")
+            pctElement.textContent = element.pct ? element.pct + "%" : "---"
+        })
+    }
+
     return {
         getInputs: function(){
             return {
@@ -181,6 +210,7 @@ var UIController = (function() {
         updateSummaryDisplay: _updateSummaryDisplay,
         addRowToTabularDisplay: _addRowToTabularDisplay,
         delRowFromTabularDisplay: _delRowFromTabularDisplay,
+        setExpensePercentages: _setExpensePercentages,
         clearFields: _clearFields,
     }
 
@@ -228,6 +258,7 @@ var appController = (function(dataCtrlr, UICtrlr) {
 
         // Add the item to the table at the bottom of the screen
         UICtrlr.addRowToTabularDisplay(newRecord, pageInputs.incomeOrExpense);
+        _updateExpensePercentages();
     }
 
     var _deleteTableItem = function(tableRowID) {
@@ -236,6 +267,7 @@ var appController = (function(dataCtrlr, UICtrlr) {
         dataCtrlr.delRecord(tableRowID);
         UICtrlr.delRowFromTabularDisplay(elementToRemove);
         _updateSummary();
+        _updateExpensePercentages();
     }
 
     var _updateSummary = function(){
@@ -250,6 +282,12 @@ var appController = (function(dataCtrlr, UICtrlr) {
             totals.income,
             totals.expenses,
             totals.pct)
+    }
+
+    var _updateExpensePercentages = function() {
+        dataCtrlr.setPercents();
+        expensePercents = dataCtrlr.getPercents();
+        UICtrlr.setExpensePercentages(expensePercents)
     }
 
     return {
