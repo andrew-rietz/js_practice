@@ -34,7 +34,12 @@ var dataController = (function() {
         var newRecord, ID;
 
         // set ID to the last ID in the array, + 1
-        ID = data.cashflow[incomeOrExpense][data.cashflow[incomeOrExpense].length - 1] + 1;
+        if (data.cashflow[incomeOrExpense].length > 0) {
+            ID = data.cashflow[incomeOrExpense][data.cashflow[incomeOrExpense].length - 1].id + 1;
+        } else {
+            ID = 0;
+        }
+
         if (incomeOrExpense === "income"){
             newRecord = new Income(ID, description, value);
         } else {
