@@ -24,6 +24,9 @@ var dataController = (function() {
             overall: 0,
             income: 0,
             expense: 0,
+        },
+        pct: {
+            overall: -1,
         }
     }
 
@@ -175,6 +178,13 @@ var appController = (function(dataCtrlr, UICtrlr) {
         );
         UICtrlr.clearFields()
 
+        _updateSummary();
+
+        // Add the item to the table at the bottom of the screen
+        UICtrlr.updateTabularDisplay(newRecord, pageInputs.incomeOrExpense);
+    }
+
+    var _updateSummary = function(){
         // // Calculate the overall budget
         dataCtrlr.setTotals()
 
