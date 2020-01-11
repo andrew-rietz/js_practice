@@ -35,7 +35,7 @@ var dataController = (function() {
         if (incomeOrExpense === "income"){
             newRecord = new Income(ID, description, value);
         } else {
-            newRecord = new Expense(ID, description, value * -1);
+            newRecord = new Expense(ID, description, value);
         }
         data.cashflow[incomeOrExpense].push(newRecord);
         return newRecord
@@ -44,7 +44,10 @@ var dataController = (function() {
     var _setTotals = function() {
         data.totals.income = sumCashflow(data.cashflow.income)
         data.totals.expense = sumCashflow(data.cashflow.expense)
-        data.totals.overall = data.totals.income + data.totals.expense
+        data.totals.overall = data.totals.income - data.totals.expense
+        data.pct.overall = data.totals.income ? 
+                           Math.round(data.totals.expense / data.totals.income, 2) * 100 : 
+                           -1
     }
 
     var sumCashflow = function(cashflow) {
