@@ -93,12 +93,15 @@ var UIController = (function() {
         expenseTable: document.querySelector(".expenses__list"),
     }
 
-    var _updateSummaryDisplay = function(overallBudget, overallIncome, overallExpenses) {
+    var _updateSummaryDisplay = function(overallBudget, overallIncome, overallExpenses, overallPct) {
         DOMelements.budgetSummaryValue.textContent = overallBudget;
         DOMelements.incomeSummaryValue.textContent = overallIncome;
-        // DOMelements.incomeSummaryPct.textContent = overallIncome / overallBudget;
         DOMelements.expenseSummaryValue.textContent = overallExpenses;
-        // DOMelements.expenseSummaryPct.textContent = overallExpenses / overallIncome;
+        DOMelements.expenseSummaryPct.textContent =  overallPct;
+
+        if (overallPct <= 0){
+            DOMelements.expenseSummaryPct.style.visibility = "hidden"
+        }
     }
 
     var _updateTabularDisplay = function(tableRecord, incomeOrExpense) {
