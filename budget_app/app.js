@@ -49,6 +49,20 @@ var dataController = (function() {
         return newRecord
     }
 
+    var _delRecord = function(id){
+        var incomeOrExpense__idNumber, incomeOrExpense, idNumber;
+        incomeOrExpense__idNumber = id.split("-")
+        incomeOrExpense = incomeOrExpense__idNumber[0]
+        idNumber = Number(incomeOrExpense__idNumber[1])
+
+        for (var i = 0; i < data.cashflow[incomeOrExpense].length; i++) {
+            if (data.cashflow[incomeOrExpense][i].id === idNumber) {
+                data.cashflow[incomeOrExpense].splice(i, 1)
+                return
+            }
+        }
+    }
+
     var _setTotals = function() {
         data.totals.income = sumCashflow(data.cashflow.income)
         data.totals.expense = sumCashflow(data.cashflow.expense)
@@ -77,6 +91,7 @@ var dataController = (function() {
 
     return {
         addRecord: _addRecord,
+        delRecord: _delRecord,
         setTotals: _setTotals,
         getTotals: _getTotals,
         data: data,
@@ -92,6 +107,7 @@ var UIController = (function() {
         inputDescription: document.querySelector(".add__description"),
         inputValue: document.querySelector(".add__value"),
         inputButton: document.querySelector(".add__btn"),
+        tableContainer: document.querySelector(".container"),
         budgetSummaryValue: document.querySelector(".budget__value"),
         incomeSummaryValue: document.querySelector(".budget__income--value"),
         incomeSummaryPct: document.querySelector(".budget__income--percentage"),
@@ -126,6 +142,10 @@ var UIController = (function() {
         DOMelements[incomeOrExpense + "Table"].insertAdjacentHTML("beforeend", html)
     }
 
+    var _delRowFromTabularDisplay = function(elementToRemove) {
+        elementToRemove.remove();
+    }
+
     var _clearFields = function(){
         fieldsToClear = [DOMelements.inputDescription,
                          DOMelements.inputValue];
@@ -147,7 +167,7 @@ var UIController = (function() {
             return DOMelements
         },
         updateSummaryDisplay: _updateSummaryDisplay,
-        updateTabularDisplay: _updateTabularDisplay,
+        delRowFromTabularDisplay: _delRowFromTabularDisplay,
         clearFields: _clearFields,
     }
 
@@ -185,7 +205,12 @@ var appController = (function(dataCtrlr, UICtrlr) {
         _updateSummary();
 
         // Add the item to the table at the bottom of the screen
-        UICtrlr.updateTabularDisplay(newRecord, pageInputs.incomeOrExpense);
+    var _deleteTableItem = function(tableRowID) {
+        var elementToRemove = document.getElementById(tableRowID);
+        
+        dataCtrlr.delRecord(tableRowID);
+        UICtrlr.delRowFromTabularDisplay(elementToRemove);
+        _updateSummary();
     }
 
     var _updateSummary = function(){
