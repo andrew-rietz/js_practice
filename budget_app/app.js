@@ -33,9 +33,9 @@ var dataController = (function() {
         // set ID to the last ID in the array, + 1
         ID = data.cashflow[incomeOrExpense][data.cashflow[incomeOrExpense].length - 1] + 1;
         if (incomeOrExpense === "income"){
-            newRecord = new Income(ID, description, Number(value));
+            newRecord = new Income(ID, description, value);
         } else {
-            newRecord = new Expense(ID, description, Number(value) * -1);
+            newRecord = new Expense(ID, description, value * -1);
         }
         data.cashflow[incomeOrExpense].push(newRecord);
         return newRecord
@@ -117,7 +117,7 @@ var UIController = (function() {
             return {
                 incomeOrExpense: DOMelements.inputIncomeOrExpense.value, // either 'income' or 'expense'
                 description: DOMelements.inputDescription.value,
-                value: DOMelements.inputValue.value,
+                value: Number(DOMelements.inputValue.value),
             }
         },
         getDOMelements: function(){
