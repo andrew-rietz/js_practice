@@ -146,6 +146,10 @@ var appController = (function(dataCtrlr, UICtrlr) {
         // Get the form inputs (add__type, add__description, add__value)
         var newRecord;
         var pageInputs = UICtrlr.getInputs();
+
+        if (pageInputs.description.trim() === "" && pageInputs.value === 0) {
+            return
+        }
         
         // Add the item to our underlying data
         newRecord = dataCtrlr.addRecord(
