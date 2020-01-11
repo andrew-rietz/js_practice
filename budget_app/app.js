@@ -178,14 +178,14 @@ var appController = (function(dataCtrlr, UICtrlr) {
         // // Calculate the overall budget
         dataCtrlr.setTotals()
 
-        // Add the item to the table at the bottom of the screen
-        UICtrlr.updateTabularDisplay(newRecord, pageInputs.incomeOrExpense);
+        totals = dataCtrlr.getTotals()
 
         // Display the overall budget
         UICtrlr.updateSummaryDisplay(
-            dataCtrlr.data.totals.overall,
-            dataCtrlr.data.totals.income,
-            dataCtrlr.data.totals.expense)
+            totals.overall,
+            totals.income,
+            totals.expenses,
+            totals.pct)
     }
 
     return {
