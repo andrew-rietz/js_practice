@@ -183,6 +183,15 @@ var appController = (function(dataCtrlr, UICtrlr) {
         document.addEventListener("keypress", function(e){ // Pass the event object to the function
             if (e.key === "Enter") { _addItem() } // Access the 'key' attribute of the event object
         })
+
+        DOM.tableContainer.addEventListener("click", function(e){
+            var tableRowID;
+
+            tableRowID = e.target.parentNode.parentNode.parentNode.parentNode.id;
+            if (tableRowID){
+                _deleteTableItem(tableRowID)
+            }
+        });
     }
 
     var _addItem = function() {
