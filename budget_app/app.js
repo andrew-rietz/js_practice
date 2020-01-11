@@ -153,10 +153,10 @@ var UIController = (function() {
         DOMelements.budgetSummaryValue.textContent = overallBudget;
         DOMelements.incomeSummaryValue.textContent = overallIncome;
         DOMelements.expenseSummaryValue.textContent = overallExpenses;
-        DOMelements.expenseSummaryPct.textContent =  overallPct;
+        DOMelements.expenseSummaryPct.textContent =  overallPct > 0 ? overallPct + "%" : "---";
 
-        elementVisibility = overallPct <= 0 ? "hidden" : "visible"
-        DOMelements.expenseSummaryPct.style.visibility = elementVisibility
+        // elementVisibility = overallPct <= 0 ? "hidden" : "visible"
+        // DOMelements.expenseSummaryPct.style.visibility = elementVisibility
     }
 
     var _addRowToTabularDisplay = function(tableRecord, incomeOrExpense, overallPct) {
