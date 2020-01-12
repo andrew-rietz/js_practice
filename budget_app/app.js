@@ -150,9 +150,9 @@ var UIController = (function() {
     }
 
     var _updateSummaryDisplay = function(overallBudget, overallIncome, overallExpenses, overallPct) {
-        DOMelements.budgetSummaryValue.textContent = overallBudget;
-        DOMelements.incomeSummaryValue.textContent = overallIncome;
-        DOMelements.expenseSummaryValue.textContent = overallExpenses;
+        DOMelements.budgetSummaryValue.textContent = _formatNumber(overallBudget);
+        DOMelements.incomeSummaryValue.textContent = _formatNumber(overallIncome);
+        DOMelements.expenseSummaryValue.textContent = _formatNumber(overallExpenses);
         DOMelements.expenseSummaryPct.textContent =  overallPct > 0 ? overallPct + "%" : "---";
 
         // elementVisibility = overallPct <= 0 ? "hidden" : "visible"
@@ -164,7 +164,7 @@ var UIController = (function() {
         var html = `<div class="item clearfix" id="${incomeOrExpense}-${tableRecord.id}">`
                     + `<div class="item__description">${tableRecord.description}</div>`
                     + `<div class="right clearfix">`
-                    + `<div class="item__value">${tableRecord.value}</div>`
+                    + `<div class="item__value">${_formatNumber(tableRecord.value)}</div>`
                     + `${pct_html}`
                     + `<div class="item__delete">`
                     + `<button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button>`
@@ -194,6 +194,10 @@ var UIController = (function() {
             pctElement = tableRecord.querySelector(".item__percentage")
             pctElement.textContent = element.pct ? element.pct + "%" : "---"
         })
+    }
+
+    var _formatNumber = function(number){
+        return `${Number(number.toFixed(2)).toLocaleString()}`
     }
 
     return {
