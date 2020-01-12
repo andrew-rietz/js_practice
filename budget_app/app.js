@@ -198,7 +198,8 @@ var UIController = (function() {
     }
 
     var _formatNumber = function(number){
-        return `${Number(number.toFixed(2)).toLocaleString()}`
+        formatted = Number(number.toFixed(2)).toLocaleString(undefined, {minimumFractionDigits: 2})
+        return formatted
     }
 
     return {
