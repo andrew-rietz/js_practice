@@ -202,6 +202,14 @@ var UIController = (function() {
         return formatted
     }
 
+    var _changeInputColors = function() {
+        DOMelements.inputIncomeOrExpense.classList.toggle("red-focus");
+        DOMelements.inputDescription.classList.toggle("red-focus");
+        DOMelements.inputValue.classList.toggle("red-focus");
+
+        DOMelements.inputButton.classList.toggle("red");
+    }
+
     return {
         getInputs: function(){
             return {
@@ -217,6 +225,7 @@ var UIController = (function() {
         addRowToTabularDisplay: _addRowToTabularDisplay,
         delRowFromTabularDisplay: _delRowFromTabularDisplay,
         setExpensePercentages: _setExpensePercentages,
+        changeInputColors: _changeInputColors,
         clearFields: _clearFields,
     }
 
@@ -234,6 +243,7 @@ var appController = (function(dataCtrlr, UICtrlr) {
         })
 
         DOM.tableContainer.addEventListener("click", _deleteTableItem);
+        DOM.inputIncomeOrExpense.addEventListener("change", UICtrlr.changeInputColors)
     }
 
     var setMonth = function(){
