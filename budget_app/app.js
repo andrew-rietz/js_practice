@@ -147,6 +147,7 @@ var UIController = (function() {
         expenseSummaryValue: document.querySelector(".budget__expenses--value"),
         expenseSummaryPct: document.querySelector(".budget__expenses--percentage"),
         expenseTable: document.querySelector(".expenses__list"),
+        bannerMonth: document.querySelector(".budget__title--month"),
     }
 
     var _updateSummaryDisplay = function(overallBudget, overallIncome, overallExpenses, overallPct) {
@@ -241,6 +242,26 @@ var appController = (function(dataCtrlr, UICtrlr) {
         });
     }
 
+    var setMonth = function(){
+        var DOM = UICtrlr.getDOMelements()
+        var today = new Date();
+        var months = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December"
+        ]
+        DOM.bannerMonth.textContent = months[today.getMonth()];
+    }
+
     var _addItem = function() {
         // Get the form inputs (add__type, add__description, add__value)
         var newRecord;
@@ -297,6 +318,7 @@ var appController = (function(dataCtrlr, UICtrlr) {
     return {
         init: function() {
             setupEventListeners();
+            setMonth();
         }
     }
     
