@@ -233,14 +233,7 @@ var appController = (function(dataCtrlr, UICtrlr) {
             if (e.key === "Enter") { _addItem() } // Access the 'key' attribute of the event object
         })
 
-        DOM.tableContainer.addEventListener("click", function(e){
-            var tableRowID;
-
-            tableRowID = e.target.parentNode.parentNode.parentNode.parentNode.id;
-            if (tableRowID){
-                _deleteTableItem(tableRowID)
-            }
-        });
+        DOM.tableContainer.addEventListener("click", _deleteTableItem);
     }
 
     var setMonth = function(){
@@ -268,9 +261,7 @@ var appController = (function(dataCtrlr, UICtrlr) {
         var newRecord;
         var pageInputs = UICtrlr.getInputs();
 
-        if (pageInputs.description.trim() === "" && pageInputs.value === 0) {
-            return
-        }
+        if (pageInputs.description.trim() === "" && pageInputs.value === 0) { return }
         
         // Add the item to our underlying data
         newRecord = dataCtrlr.addRecord(
@@ -287,8 +278,12 @@ var appController = (function(dataCtrlr, UICtrlr) {
         _updateExpensePercentages();
     }
 
-    var _deleteTableItem = function(tableRowID) {
-        var elementToRemove = document.getElementById(tableRowID);
+    var _deleteTableItem = function(event) {
+        var tableRowID, elementToRemove;
+        tableRowID = event.target.parentNode.parentNode.parentNode.parentNode.id;
+        if (!tableRowID){ return }
+
+        elementToRemove = document.getElementById(tableRowID);
         
         dataCtrlr.delRecord(tableRowID);
         UICtrlr.delRowFromTabularDisplay(elementToRemove);
