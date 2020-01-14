@@ -49,6 +49,9 @@ class Park extends Infrastructure {
     }
 
     getTreeDensity(){
+        if (this.treeDensity === undefined){
+            this.setTreeDensity();
+        }
         return this.treeDensity
     }
 }
