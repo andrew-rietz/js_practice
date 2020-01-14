@@ -80,3 +80,15 @@ streetInputs = [
 ]
 let streets = streetInputs.map(inputSet => new Street(...inputSet));
 
+
+let summarizeTreeDensities = () => {
+    densitySummary = "\n-----Tree Density Report-----";
+    for (const park of parks){
+        treeDensity = park.getTreeDensity().toLocaleString(undefined, {minimumFractionDigits: 3});
+        densitySummary += `\n[${park.name}]: ${treeDensity} trees per square meter`;
+    }
+    return densitySummary = densitySummary.trim();
+}
+
+const metrics = new Map();
+metrics.set("Tree Density", summarizeTreeDensities())
