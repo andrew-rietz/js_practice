@@ -41,6 +41,7 @@ class Park extends Infrastructure {
     constructor(name, yearBuilt, numTrees, area, treeDensity = undefined){
         super(name, yearBuilt);
         this.numTrees = numTrees;
+        this.area = area;
         this.treeDensity = treeDensity;
     }
 
