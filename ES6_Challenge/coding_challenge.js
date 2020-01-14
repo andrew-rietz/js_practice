@@ -24,3 +24,40 @@ HINT: Use some of the ES6 features: classes, subclasses, template strings, defau
 maps, arrow functions, destructuring, etc.
 
 */
+
+
+class Infrastructure{
+    constructor(name, yearBuilt){
+        this.name = name;
+        this.yearBuilt = yearBuilt;
+    }
+
+    getAge(){
+        return Date.prototype.getFullYear() - this.yearBuilt;
+    }
+}
+
+class Park extends Infrastructure {
+    constructor(name, yearBuilt, numTrees, area, treeDensity = undefined){
+        super(name, yearBuilt);
+        this.numTrees = numTrees;
+        this.treeDensity = treeDensity;
+    }
+
+    setTreeDensity(){
+        this.treeDensity =  this.numTrees / this.area;
+    }
+
+    getTreeDensity(){
+        return this.treeDensity
+    }
+}
+
+class Street extends Infrastructure {
+    constructor(name, yearBuilt, length, sizeCategory = "Unknown"){
+        super(name, yearBuilt);
+        this.length = length;
+        this.sizeCategory = sizeCategory;
+    }
+}
+
