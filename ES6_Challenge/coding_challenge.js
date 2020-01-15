@@ -98,3 +98,11 @@ let summarizeParkAges = () => {
         + `\nThe average age of the town's parks is ${meanAge.toFixed(2)} years.`
     )
 }
+
+let listParksOverThousandTrees = () => {
+    parksOverThousand = parks.filter(park => park.numTrees >= 1000).map(park => park.name)
+    return (
+        `\n\n-----Tree Count Report-----`
+        + `\nThe following park(s) have over 1,000 trees each: [${parksOverThousand.join(", ")}]`
+    )
+}
