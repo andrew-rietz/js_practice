@@ -91,5 +91,10 @@ let summarizeTreeDensities = () => {
     return densitySummary = densitySummary.trim();
 }
 
-const metrics = new Map();
-metrics.set("Tree Density", summarizeTreeDensities())
+let summarizeParkAges = () => {
+    meanAge = parks.reduce((sum, park) => sum + park.getAge(), initialValue=0) / parks.length;
+    return (
+        `\n\n-----Park Age Report-----`
+        + `\nThe average age of the town's parks is ${meanAge.toFixed(2)} years.`
+    )
+}
