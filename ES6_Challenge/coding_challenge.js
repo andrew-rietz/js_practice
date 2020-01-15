@@ -124,3 +124,15 @@ let classifyStreetSize = () => {
     }
     return streetReport
 }
+
+
+let metrics = new Map();
+metrics.set("Tree Density", summarizeTreeDensities());
+metrics.set("Park Ages", summarizeParkAges());
+metrics.set("Tree Report", listParksOverThousandTrees());
+metrics.set("Street Lengths", summarizeStreetLengths());
+metrics.set("Street Sizes", classifyStreetSize());
+
+for (const [k, v] of metrics.entries()) {
+    console.log(v)
+}
