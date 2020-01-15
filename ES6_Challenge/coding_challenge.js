@@ -67,9 +67,9 @@ class Street extends Infrastructure {
 }
 
 parkInputs = [
-    ["Park 1", 1960, 100, 2500],
-    ["Park 2", 1970, 50, 650],
-    ["Park 3", 1965, 45, 1900],
+    ["Park 1", 1960, 1000, 25000],
+    ["Park 2", 1970, 50, 6500],
+    ["Park 3", 1965, 45, 19000],
 ]
 let parks = parkInputs.map(inputSet => new Park(...inputSet));
 
