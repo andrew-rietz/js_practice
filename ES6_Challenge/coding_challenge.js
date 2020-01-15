@@ -33,7 +33,8 @@ class Infrastructure{
     }
 
     getAge(){
-        return Date.prototype.getFullYear() - this.yearBuilt;
+        let today = new Date;
+        return today.getFullYear() - this.yearBuilt;
     }
 }
 
