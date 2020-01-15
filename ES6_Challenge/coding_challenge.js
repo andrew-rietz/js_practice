@@ -58,7 +58,7 @@ class Park extends Infrastructure {
 }
 
 class Street extends Infrastructure {
-    constructor(name, yearBuilt, length, sizeCategory = "Unknown"){
+    constructor(name, yearBuilt, length, sizeCategory = "Normal"){
         super(name, yearBuilt);
         this.length = length;
         this.sizeCategory = sizeCategory;
