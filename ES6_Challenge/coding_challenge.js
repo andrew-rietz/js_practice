@@ -106,3 +106,21 @@ let listParksOverThousandTrees = () => {
         + `\nThe following park(s) have over 1,000 trees each: [${parksOverThousand.join(", ")}]`
     )
 }
+
+let summarizeStreetLengths = () => {
+    totalStreetLength = streets.reduce((sum, street) => sum + street.length, initialValue=0);
+    meanStreetLength = totalStreetLength / streets.length;
+    return (
+        `\n\n-----Street Length Report-----`
+        + `\nThe average street length is ${meanStreetLength.toLocaleString(undefined, {maximumFractionDigits: 1})} and `
+        + `the total length of the streets is ${totalStreetLength.toLocaleString(undefined, {maximumFractionDigits: 1})}.`
+    )
+}
+
+let classifyStreetSize = () => {
+    let streetReport = `\n\n-----Street Size Report-----`;
+    for (const street of streets){
+        streetReport += `\n[${street.name}]: ${street.sizeCategory}`
+    }
+    return streetReport
+}
