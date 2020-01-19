@@ -1,0 +1,14 @@
+{
+  "name": "recipe_app",
+  "version": "1.0.0",
+  "description": "recipe app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "rietz",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^4.41.5"
+  }
+}
