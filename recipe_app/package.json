@@ -4,11 +4,14 @@
   "description": "recipe app",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "webpack --mode development",
+    "build": "webpack --mode production"
   },
   "author": "rietz",
   "license": "ISC",
   "devDependencies": {
-    "webpack": "^4.41.5"
-  }
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
+  },
+  "dependencies": {}
 }
