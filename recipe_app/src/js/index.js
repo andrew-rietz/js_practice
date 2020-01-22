@@ -1,6 +1,6 @@
-// Global app controller
-import x from "./test";
-const y = 23;
+import Search from "./models/Search";
 
-console.log(`I imported ${x}!`)
-console.log(`Variable y is ${y}`)
+const search = new Search("pizza");
+console.log(search)
+
+search.getResults();
